@@ -59,7 +59,7 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* Панель */
+/* Вся панель */
 
 .panel-frame {
   width: 100%;
@@ -81,17 +81,7 @@ h1 {
   border-radius: 7px;
 }
 
-/* Загальні кнопки */
-
-button {
-  font: inherit;
-  -webkit-tap-highlight-color: transparent;
-}
-
-button:focus-visible {
-  outline: 2px solid #42c5a8;
-  outline-offset: 3px;
-}
+/* Дві круглі кнопки зліва */
 
 .left-buttons {
   display: flex;
@@ -103,6 +93,7 @@ button:focus-visible {
 .round-button {
   width: 39px;
   height: 39px;
+  padding: 0;
   border-radius: 50%;
   border: 3px solid #4a5256;
   background: linear-gradient(145deg,#111719,#41494d);
@@ -125,7 +116,11 @@ button:focus-visible {
   box-shadow: 0 0 9px #42c5a855;
 }
 
-/* Центральні клавіші */
+.round-button:active {
+  transform: scale(.94);
+}
+
+/* Три широкі клавіші */
 
 .main-buttons {
   display: grid;
@@ -135,73 +130,54 @@ button:focus-visible {
 }
 
 .rocker {
+  position: relative;
+  padding: 0;
   border: 1px solid #101517;
   border-radius: 4px;
   background: linear-gradient(90deg,#151a1d,#353b3e 50%,#151a1d);
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  place-items: center;
   color: #c1c7c9;
   box-shadow: inset 0 2px 4px #ffffff0b,
               inset 0 -3px 5px #0009;
-  overflow: hidden;
-  padding: 0;
-}
-
-.rocker-part {
-  display: grid;
-  place-items: center;
   cursor: pointer;
-  min-height: 0;
-}
-
-.rocker-part:first-child {
-  border-bottom: 1px solid #59616555;
-}
-
-.rocker-part:active,
-.small-part:active {
-  background: #42c5a833;
+  overflow: hidden;
 }
 
 .rocker svg {
-  width: 25px;
-  height: 24px;
+  width: 35px;
+  height: 45px;
+  pointer-events: none;
 }
 
-/* Вертикальна клавіша */
+.rocker:active,
+.vertical-button:active,
+.small-rocker:active {
+  filter: brightness(1.5);
+}
+
+/* Вертикальна кнопка */
 
 .vertical-button {
+  position: relative;
   height: 70px;
+  padding: 0;
   border: 2px solid #4a5256;
   border-radius: 9px;
   background: linear-gradient(90deg,#151a1d,#343a3e,#151a1d);
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  color: #c1c7c9;
-  overflow: hidden;
-  padding: 0;
-}
-
-.vertical-part {
-  display: grid;
   place-items: center;
+  color: #c1c7c9;
   cursor: pointer;
 }
 
-.vertical-part:first-child {
-  border-bottom: 1px solid #59616555;
-}
-
-.vertical-part:active {
-  background: #42c5a833;
-}
-
 .vertical-button svg {
-  width: 22px;
-  height: 23px;
+  width: 24px;
+  height: 42px;
+  pointer-events: none;
 }
 
-/* Праві клавіші */
+/* Три клавіші справа */
 
 .right-buttons {
   height: 66px;
@@ -211,45 +187,32 @@ button:focus-visible {
 }
 
 .small-rocker {
+  padding: 0;
   border: 1px solid #111719;
   border-radius: 3px;
   background: linear-gradient(90deg,#151a1d,#343a3e,#151a1d);
   color: #c1c7c9;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  overflow: hidden;
-}
-
-.small-part {
-  display: grid;
-  place-items: center;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: 15px;
-  font-weight: bold;
+  cursor: pointer;
 }
 
-.small-part:first-child {
-  border-bottom: 1px solid #59616555;
+.small-rocker svg {
+  width: 18px;
+  height: 29px;
+  pointer-events: none;
 }
 
-.small-part:active {
-  background: #42c5a833;
-}
-
-/* Стан і показники */
+/* Інформація */
 
 .info {
   margin-top: 28px;
   padding: 20px;
   background: #202629;
   border-radius: 15px;
-}
-
-.section-title {
-  color: #92999d;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  margin-bottom: 17px;
 }
 
 .info-row {
@@ -263,11 +226,7 @@ button:focus-visible {
 .info-row:last-child { margin-bottom: 0; }
 
 .info-label { color: #92999d; }
-
-.info-value {
-  font-weight: bold;
-  text-align: right;
-}
+.info-value { font-weight: bold; }
 
 .active-value { color: #42c5a8; }
 
@@ -293,169 +252,147 @@ footer {
 <div class="subtitle">DAF XG+ · DRIVER SEAT</div>
 
 <div class="panel-frame">
-<div class="panel">
+  <div class="panel">
 
-  <!-- Вентиляція і підігрів -->
-  <div class="left-buttons">
+    <!-- ЛІВА КОЛОНКА -->
 
-    <button class="round-button" id="ventButton"
-            type="button" aria-label="Ventilation">
-      <svg viewBox="0 0 40 40" fill="none"
+    <div class="left-buttons">
+
+      <button class="round-button" id="ventButton"
+              type="button" aria-label="Seat ventilation">
+        <svg viewBox="0 0 40 40" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M10 25h22l-5-13H13v13Z"/>
+          <path d="M14 9c-4-4 2-5 0-8"/>
+          <path d="M21 9c-4-4 2-5 0-8"/>
+          <path d="M28 9c-4-4 2-5 0-8"/>
+        </svg>
+      </button>
+
+      <button class="round-button" id="heaterButton"
+              type="button" aria-label="Seat heating">
+        <svg viewBox="0 0 40 40" fill="none"
+             stroke="currentColor" stroke-width="2.3"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21V10h10v11"/>
+          <path d="M12 21h13l5 12H9v-5q0-5 3-7Z"/>
+          <path d="M16 26h10"/>
+          <path d="M8 10c-3-3 2-4 0-7"/>
+          <path d="M20 8c-3-3 2-4 0-7"/>
+          <path d="M32 10c-3-3 2-4 0-7"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- ТРИ ЦЕНТРАЛЬНІ КЛАВІШІ -->
+
+    <div class="main-buttons">
+
+      <button class="rocker" type="button"
+              data-control="position" aria-label="Seat position">
+        <svg viewBox="0 0 50 60" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M17 37V10l9-3v30H17Z"/>
+          <path d="M8 42h30v8H8z"/>
+          <path d="M40 42l-5 5 5 5"/>
+        </svg>
+      </button>
+
+      <button class="rocker" type="button"
+              data-control="backrest" aria-label="Backrest">
+        <svg viewBox="0 0 50 60" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M29 8v30l-9 3V11l9-3Z"/>
+          <path d="M6 43h30v8H6z"/>
+          <path d="M8 12l-4 4 4 4"/>
+          <path d="M8 23l-4 4 4 4"/>
+        </svg>
+      </button>
+
+      <button class="rocker" type="button"
+              data-control="height" aria-label="Seat height">
+        <svg viewBox="0 0 50 60" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M17 8v30l9 3V11l-9-3Z"/>
+          <path d="M8 43h30v8H8z"/>
+          <path d="M40 12l4 4-4 4"/>
+          <path d="M40 23l4 4-4 4"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- ВЕРТИКАЛЬНА КЛАВІША -->
+
+    <button class="vertical-button" type="button"
+            data-control="lumbar" aria-label="Lumbar support">
+      <svg viewBox="0 0 35 60" fill="none"
            stroke="currentColor" stroke-width="2">
-        <path d="M10 25h22l-5-13H13v13Z"/>
-        <path d="M14 9c-4-4 2-5 0-8"/>
-        <path d="M21 9c-4-4 2-5 0-8"/>
-        <path d="M28 9c-4-4 2-5 0-8"/>
+        <path d="M10 39V12l14-5v32H10Z"/>
+        <path d="M7 43h24"/>
+        <path d="M12 49h12"/>
       </svg>
     </button>
 
-    <button class="round-button" id="heaterButton"
-            type="button" aria-label="Heating">
-      <svg viewBox="0 0 40 40" fill="none"
-           stroke="currentColor" stroke-width="2.3"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 21V10h10v11"/>
-        <path d="M12 21h13l5 12H9v-5q0-5 3-7Z"/>
-        <path d="M16 26h10"/>
-        <path d="M8 10c-3-3 2-4 0-7"/>
-        <path d="M20 8c-3-3 2-4 0-7"/>
-        <path d="M32 10c-3-3 2-4 0-7"/>
-      </svg>
-    </button>
+    <!-- ТРИ КЛАВІШІ СПРАВА -->
 
-  </div>
+    <div class="right-buttons">
 
-  <!-- Три центральні клавіші -->
-  <div class="main-buttons">
+      <button class="small-rocker" type="button"
+              data-control="sideSupport" aria-label="Side support">
+        +
+        <svg viewBox="0 0 30 40" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <rect x="7" y="3" width="16" height="29" rx="2"/>
+          <path d="M7 23h16"/>
+        </svg>
+      </button>
 
-    <div class="rocker">
-      <button class="rocker-part" data-control="position"
-              data-direction="up" aria-label="Move seat forward">
-        <svg viewBox="0 0 40 30" fill="none"
+      <button class="small-rocker" type="button"
+              data-control="cushion" aria-label="Seat cushion">
+        +
+        <svg viewBox="0 0 30 40" fill="none"
              stroke="currentColor" stroke-width="2">
-          <path d="M8 20h23M24 13l7 7-7 7"/>
+          <rect x="7" y="3" width="16" height="29" rx="2"/>
+          <path d="M7 23h16"/>
         </svg>
       </button>
-      <button class="rocker-part" data-control="position"
-              data-direction="down" aria-label="Move seat backward">
-        <svg viewBox="0 0 40 30" fill="none"
-             stroke="currentColor" stroke-width="2">
-          <path d="M31 10H8m7-7-7 7 7 7"/>
-        </svg>
-      </button>
-    </div>
 
-    <div class="rocker">
-      <button class="rocker-part" data-control="backrest"
-              data-direction="up" aria-label="Recline backrest">
-        <svg viewBox="0 0 40 30" fill="none"
+      <button class="small-rocker" type="button"
+              data-control="support" aria-label="Additional support">
+        +
+        <svg viewBox="0 0 30 40" fill="none"
              stroke="currentColor" stroke-width="2">
-          <path d="M12 25V5l13 4v16"/>
-          <path d="M8 25h25"/>
+          <rect x="7" y="3" width="16" height="29" rx="2"/>
+          <path d="M7 23h16"/>
         </svg>
       </button>
-      <button class="rocker-part" data-control="backrest"
-              data-direction="down" aria-label="Straighten backrest">
-        <svg viewBox="0 0 40 30" fill="none"
-             stroke="currentColor" stroke-width="2">
-          <path d="M12 5v20l13-4V5"/>
-          <path d="M8 25h25"/>
-        </svg>
-      </button>
-    </div>
 
-    <div class="rocker">
-      <button class="rocker-part" data-control="height"
-              data-direction="up" aria-label="Raise seat">
-        <svg viewBox="0 0 40 30" fill="none"
-             stroke="currentColor" stroke-width="2">
-          <path d="M20 25V5m-7 7 7-7 7 7"/>
-        </svg>
-      </button>
-      <button class="rocker-part" data-control="height"
-              data-direction="down" aria-label="Lower seat">
-        <svg viewBox="0 0 40 30" fill="none"
-             stroke="currentColor" stroke-width="2">
-          <path d="M20 5v20m-7-7 7 7 7-7"/>
-        </svg>
-      </button>
     </div>
 
   </div>
-
-  <!-- Поперекова підтримка -->
-  <div class="vertical-button">
-    <button class="vertical-part" data-control="lumbar"
-            data-direction="up" aria-label="Increase lumbar support">
-      <svg viewBox="0 0 35 30" fill="none"
-           stroke="currentColor" stroke-width="2">
-        <path d="M17 25V5m-7 7 7-7 7 7"/>
-      </svg>
-    </button>
-    <button class="vertical-part" data-control="lumbar"
-            data-direction="down" aria-label="Decrease lumbar support">
-      <svg viewBox="0 0 35 30" fill="none"
-           stroke="currentColor" stroke-width="2">
-        <path d="M17 5v20m-7-7 7 7 7-7"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Додаткові регулятори -->
-  <div class="right-buttons">
-
-    <div class="small-rocker">
-      <button class="small-part" data-control="sideSupport"
-              data-direction="up" aria-label="Increase side support">+</button>
-      <button class="small-part" data-control="sideSupport"
-              data-direction="down" aria-label="Decrease side support">−</button>
-    </div>
-
-    <div class="small-rocker">
-      <button class="small-part" data-control="cushion"
-              data-direction="up" aria-label="Increase cushion">+</button>
-      <button class="small-part" data-control="cushion"
-              data-direction="down" aria-label="Decrease cushion">−</button>
-    </div>
-
-    <div class="small-rocker">
-      <button class="small-part" data-control="support"
-              data-direction="up" aria-label="Increase support">+</button>
-      <button class="small-part" data-control="support"
-              data-direction="down" aria-label="Decrease support">−</button>
-    </div>
-
-  </div>
-
-</div>
 </div>
 
-<!-- Інформація -->
 <div class="info">
 
-  <div class="section-title">SEAT FUNCTIONS</div>
-
   <div class="info-row">
-    <span class="info-label">HEATING</span>
-    <span class="info-value" id="heatingStatus">OFF</span>
+    <span class="info-label">HEATING STATUS</span>
+    <span class="info-value" id="heatingStatus">INACTIVE</span>
   </div>
 
   <div class="info-row">
-    <span class="info-label">VENTILATION</span>
-    <span class="info-value" id="ventStatus">OFF</span>
-  </div>
-
-  <div class="section-title" style="margin-top:25px">
-    SEAT POSITION
+    <span class="info-label">VENTILATION STATUS</span>
+    <span class="info-value" id="ventStatus">INACTIVE</span>
   </div>
 
   <div class="info-row">
-    <span class="info-label">FORWARD / BACKWARD</span>
+    <span class="info-label">SEAT POSITION</span>
     <span class="info-value" id="positionValue">50%</span>
   </div>
 
   <div class="info-row">
-    <span class="info-label">BACKREST ANGLE</span>
+    <span class="info-label">BACKREST</span>
     <span class="info-value" id="backrestValue">50%</span>
   </div>
 
@@ -475,7 +412,7 @@ footer {
   </div>
 
   <div class="info-row">
-    <span class="info-label">CUSHION</span>
+    <span class="info-label">SEAT CUSHION</span>
     <span class="info-value" id="cushionValue">50%</span>
   </div>
 
@@ -512,80 +449,93 @@ try {
 
   if (saved && typeof saved === "object") {
     state = { ...defaults, ...saved };
+
+    for (const key of Object.keys(defaults)) {
+      if (typeof defaults[key] === "number") {
+        const value = Number(state[key]);
+        state[key] = Number.isFinite(value)
+          ? Math.max(0, Math.min(100, value))
+          : defaults[key];
+      } else {
+        state[key] = state[key] === true;
+      }
+    }
   }
 } catch (error) {
   state = { ...defaults };
 }
 
-const controls = {
-  position: "positionValue",
-  backrest: "backrestValue",
-  height: "heightValue",
-  lumbar: "lumbarValue",
-  sideSupport: "sideSupportValue",
-  cushion: "cushionValue",
-  support: "supportValue"
-};
+const heaterButton = document.getElementById("heaterButton");
+const ventButton = document.getElementById("ventButton");
 
 function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn("Could not save seat settings:", error);
+  }
+}
+
+function setStatus(id, active) {
+  const element = document.getElementById(id);
+
+  element.textContent = active ? "ACTIVE" : "INACTIVE";
+  element.classList.toggle("active-value", active);
 }
 
 function render() {
-  document.getElementById("heaterButton")
-    .classList.toggle("active", state.heating);
+  heaterButton.classList.toggle("active", state.heating);
+  ventButton.classList.toggle("active", state.ventilation);
 
-  document.getElementById("ventButton")
-    .classList.toggle("active", state.ventilation);
+  setStatus("heatingStatus", state.heating);
+  setStatus("ventStatus", state.ventilation);
 
-  document.getElementById("heatingStatus").textContent =
-    state.heating ? "ON" : "OFF";
-
-  document.getElementById("ventStatus").textContent =
-    state.ventilation ? "ON" : "OFF";
-
-  document.getElementById("heatingStatus")
-    .classList.toggle("active-value", state.heating);
-
-  document.getElementById("ventStatus")
-    .classList.toggle("active-value", state.ventilation);
-
-  Object.entries(controls).forEach(([key, elementId]) => {
-    document.getElementById(elementId).textContent =
+  for (const key of [
+    "position",
+    "backrest",
+    "height",
+    "lumbar",
+    "sideSupport",
+    "cushion",
+    "support"
+  ]) {
+    document.getElementById(key + "Value").textContent =
       state[key] + "%";
-  });
+  }
+
+  saveState();
 }
 
-document.getElementById("heaterButton")
-  .addEventListener("click", () => {
-    state.heating = !state.heating;
-    saveState();
-    render();
-  });
+heaterButton.addEventListener("click", () => {
+  state.heating = !state.heating;
+  render();
+});
 
-document.getElementById("ventButton")
-  .addEventListener("click", () => {
-    state.ventilation = !state.ventilation;
-    saveState();
-    render();
-  });
+ventButton.addEventListener("click", () => {
+  state.ventilation = !state.ventilation;
+  render();
+});
+
+/*
+  Верхня половина клавіші: збільшення.
+  Нижня половина клавіші: зменшення.
+*/
 
 document.querySelectorAll("[data-control]").forEach(button => {
-  button.addEventListener("click", () => {
-    const control = button.dataset.control;
-    const direction = button.dataset.direction;
+  button.addEventListener("click", event => {
+    const key = button.dataset.control;
+    const rect = button.getBoundingClientRect();
 
-    if (!(control in controls)) return;
+    const clickedUpperHalf =
+      event.clientY < rect.top + rect.height / 2;
 
-    const step = 5;
-    const change = direction === "up" ? step : -step;
+    const change = clickedUpperHalf ? 5 : -5;
 
-    state[control] = Math.max(
+    state[key] = Math.max(
       0,
-      Math.min(100, state[control] + change)
+      Math.min(100, state[key] + change)
     );
 
-    saveState();
     render();
   });
 });
