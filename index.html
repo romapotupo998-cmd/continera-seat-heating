@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111315">
+
+<title>Continera Seat Heating</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #111315;
+  color: #e8e8e8;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 430px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 45px;
+}
+
+.logo {
+  font-size: 19px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.connection {
+  color: #42c5a8;
+  font-size: 11px;
+  border: 1px solid #286b5d;
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 25px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #92999d;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+.seat-card {
+  background: #202629;
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.seat-icon {
+  font-size: 75px;
+  margin-bottom: 15px;
+  filter: grayscale(1);
+  transition: filter 0.3s;
+}
+
+.seat-icon.active {
+  filter: none;
+}
+
+.level-display {
+  font-size: 30px;
+  font-weight: bold;
+  color: #42c5c0;
+  margin-bottom: 8px;
+}
+
+.status-text {
+  color: #aab2b5;
+  font-size: 13px;
+}
+
+.section-title {
+  color: #aab2b5;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 35px;
+}
+
+.level-button {
+  border: 1px solid #343c3f;
+  background: #252b2e;
+  color: #e8e8e8;
+  border-radius: 13px;
+  padding: 17px 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.level-button.active {
+  background: #246d6b;
+  border-color: #42c5c0;
+  color: white;
+}
+
+.info {
+  border-top: 1px solid #30383b;
+  padding-top: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.info-label {
+  color: #92999d;
+}
+
+.info-value {
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  color: #687477;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-top: 55px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="logo">CONTINERA</div>
+    <div class="connection">CONNECTED</div>
+  </header>
+
+  <h1>SEAT HEATING</h1>
+  <div class="subtitle">DRIVER SEAT</div>
+
+  <div class="seat-card">
+
+    <div class="seat-icon" id="seatIcon">♨️</div>
+
+    <div class="level-display" id="levelDisplay">
+      OFF
+    </div>
+
+    <div class="status-text" id="statusText">
+      Heating inactive
+    </div>
+
+  </div>
+
+  <div class="section-title">HEATING LEVEL</div>
+
+  <div class="levels">
+
+    <button class="level-button active" data-level="0">OFF</button>
+    <button class="level-button" data-level="1">1</button>
+    <button class="level-button" data-level="2">2</button>
+    <button class="level-button" data-level="3">3</button>
+
+  </div>
+
+  <div class="info">
+
+    <div class="info-row">
+      <span class="info-label">STATUS</span>
+      <span class="info-value" id="statusValue">INACTIVE</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">SEAT</span>
+      <span class="info-value">DRIVER</span>
+    </div>
+
+  </div>
+
+  <footer>CONTINERA SYSTEMS</footer>
+
+</div>
+
+<script>
+const buttons = document.querySelectorAll(".level-button");
+
+const levelDisplay = document.getElementById("levelDisplay");
+const statusText = document.getElementById("statusText");
+const statusValue = document.getElementById("statusValue");
+const seatIcon = document.getElementById("seatIcon");
+
+let currentLevel = Number(
+  localStorage.getItem("contineraSeatHeating") || 0
+);
+
+function updateHeating(level) {
+  currentLevel = level;
+
+  levelDisplay.textContent =
+    level === 0 ? "OFF" : "LEVEL " + level;
+
+  statusText.textContent =
+    level === 0 ? "Heating inactive" : "Heating active";
+
+  statusValue.textContent =
+    level === 0 ? "INACTIVE" : "ACTIVE";
+
+  seatIcon.classList.toggle("active", level > 0);
+
+  buttons.forEach(button => {
+    const buttonLevel = Number(button.dataset.level);
+
+    button.classList.toggle(
+      "active",
+      buttonLevel === level
+    );
+  });
+
+  localStorage.setItem(
+    "contineraSeatHeating",
+    level
+  );
+}
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    updateHeating(Number(button.dataset.level));
+  });
+});
+
+if (currentLevel < 0 || currentLevel > 3) {
+  currentLevel = 0;
+}
+
+updateHeating(currentLevel);
+</script>
+
+</body>
+    </html>
+    
