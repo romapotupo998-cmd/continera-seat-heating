@@ -544,5 +544,14 @@ document.querySelectorAll("[data-control]").forEach(button => {
 render();
 </script>
 
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Continera Seat Control: PWA ready"))
+      .catch(error => console.error("PWA error:", error));
+  });
+}
+  </script>
 </body>
 </html>
